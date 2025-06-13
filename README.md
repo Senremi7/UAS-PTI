@@ -1,62 +1,113 @@
-# Sistem Item dalam Game Simulasi Karakter
+# Life Simulator Game
 
-Sistem item dalam game simulasi karakter ini memungkinkan pemain untuk memperoleh, mengelola, dan menggunakan berbagai item yang mempengaruhi gameplay.
+## Group Members
+- **Jeremiah Ephraim Jonathan**
+- **Damianus Lowa Mite**
+- **Dhimas Alkautsar Putra Alif Viano**
 
-## Fitur Utama
+**Link Google Drive:**  
+[Video Demo](https://drive.google.com/drive/folders/13jvpeowvMVOfJSSeot8c1iEFrO7USII0?usp=sharing)  
+[Google Drive Folder untuk poster](https://drive.google.com/drive/folders/1DbLbVhNI1SUjCbd-fu8OncG7bsUhNqP_?usp=sharing)
 
-1. **Perolehan Item**:
-   - Dibeli melalui toko dalam game
-   - Didapatkan sebagai hasil dari menyelesaikan aktivitas tertentu
+**Laporan:**
+https://docs.google.com/document/d/19wMLH1VNWLqBQOe35x1l7zoDexshCgCtgQVf9nKOTos/edit?usp=sharing
 
-2. **Fungsi Item**:
-   - Item Consumable: Meningkatkan statistik pemain saat digunakan
-   - Item Kunci: Membuka akses ke aktivitas tertentu
-   - Item Reward: Didapatkan dari aktivitas dan dapat dijual
+**GitHub Source:**
+https://github.com/Senremi7/UAS-PTI
 
-3. **Pengelolaan Inventaris**:
-   - Melihat daftar item yang dimiliki
-   - Menggunakan item langsung dari inventaris
-   - Menjual item untuk mendapatkan koin
+**Vercel Live Host:**
+https://uas-pti-zeta.vercel.app
 
-## Jenis Item
 
-### Item Consumable
-- **Vitamin**: Meningkatkan energi (+20)
-- **Makanan Siap Saji**: Meningkatkan kenyang (+30)
-- **Obat**: Meningkatkan kesehatan (+25)
-- **Buku Pengetahuan**: Meningkatkan kecerdasan (+15)
+## Gameplay Rules
 
-### Item Kunci
-- **Kartu Gym**: Membuka akses ke aktivitas Fitness
-- **Alat Pancing**: Membuka akses ke aktivitas Memancing
+### 1. Time System
+- 1 real second = 1 game minute
+- 24 game hours = 1 game day
+- Game starts at 8:00 AM, Day 1
+- Time advances automatically and through certain actions (example, sleeping, camping)
 
-### Item Reward
-- **Ikan**: Didapatkan dari aktivitas memancing, dapat dijual
-- **Buah**: Didapatkan dari aktivitas berkebun, dapat dijual atau dimakan
+### 2. Stat Decay
+- Every 5 real seconds (5 game minutes), the following stats decrease:
+  - Hunger: -0.5%
+  - Energy: -0.3%
+  - Hygiene: -0.2%
+  - Happiness: -0.4%
+- Stats are capped between 0% and 100%
 
-## Cara Menggunakan
+### 3. Critical Warnings
+- Alerts appear when:
+  - Hunger < 20%
+  - Energy < 15%
 
-1. **Toko**:
-   - Klik tombol "Toko" untuk membuka panel toko
-   - Pilih item yang ingin dibeli
-   - Klik tombol "Beli" untuk membeli item (jika memiliki cukup koin)
+### 4. Game Over Conditions
+- Hunger = 0%: "You starved to death!"
+- Energy = 0%: "You ran out of energy!"
+- Happiness = 0%: "You became too depressed to continue!"
+- Hygiene = 0%: "Your poor hygiene made you sick!"
+- Money < $0: "You went bankrupt!"
+- After game over, you can restart or quit
 
-2. **Inventaris**:
-   - Klik tombol "Inventaris" untuk membuka panel inventaris
-   - Pilih item yang ingin digunakan atau dijual
-   - Klik tombol "Gunakan" untuk menggunakan item consumable
-   - Klik tombol "Jual" untuk menjual item dan mendapatkan koin
+### 5. Location-Based Actions
 
-3. **Aktivitas dengan Persyaratan Item**:
-   - Beberapa aktivitas memerlukan item tertentu untuk diakses
-   - Pesan persyaratan akan ditampilkan jika mencoba mengakses aktivitas tanpa item yang diperlukan
+#### Home
+- Sleep: +30 Energy, +4 hours
+- Eat: +20 Hunger
+- Play Games: +20 Happiness, -10 Energy
+- Shower: +20 Hygiene
+- Remote Work: +$25, -20 Energy, -5 Happiness
+- Read Book: +15 Happiness, -5 Energy
 
-## Implementasi Teknis
+#### Lake (Danau)
+- Fish: +15 Hunger, +10 Happiness, -10 Energy
+- Swim: +15 Hygiene, +10 Happiness, -15 Energy
+- Rest: +15 Energy, +1 hour
+- Take Nature Photos: +$10, +10 Happiness, -5 Energy
 
-Sistem item terdiri dari beberapa komponen utama:
+#### Beach (Pantai)
+- Swim: +20 Hygiene, +15 Happiness, -10 Energy
+- Sunbathe: +20 Happiness, +10 Energy, -5 Hunger
+- Build Sandcastle: +25 Happiness, -10 Energy
+- Buy Souvenir: -$15, +20 Happiness
 
-1. **ItemSystem**: Mengelola inventaris, toko, dan interaksi dengan item
-2. **ActivityRequirements**: Memeriksa persyaratan item untuk aktivitas tertentu
-3. **RewardSystem**: Menampilkan notifikasi ketika pemain mendapatkan item baru
+#### Mountain (Gunung)
+- Hike: +20 Happiness, -20 Energy, -10 Hunger
+- Camp: +20 Energy, +15 Happiness, +2 hours
+- Find Treasure: +$10–$60 (random), -15 Energy
+- Take Mountain Photos: +$5–$25 (random), -10 Energy
 
-Item disimpan dalam state `playerInventory` dan dikelola melalui fungsi `updatePlayerInventory`. Uang pemain disimpan dalam state `playerMoney` dan dikelola melalui fungsi `updatePlayerMoney`.
+#### Temple (Candi)
+- Explore: +15 Happiness, -10 Energy, -5 Hunger
+- Meditate: +20 Happiness, +15 Energy, +1 hour
+- Pray/Offering: -$10, random stat +5–20
+- Learn History: +10 Happiness, -5 Energy
+
+### 6. Movement
+- WASD or Arrow keys for desktop movement
+- On-screen buttons for mobile/touch
+- Speed: 8 pixels per move
+
+### 7. Money System
+- Start: $100
+- Earn: Remote work, selling photos, finding treasure, etc.
+- Spend: Souvenirs, temple offerings, etc.
+
+### 8. Character Customization
+- Choose your avatar (from a selection)
+- Enter your player name
+
+### 9. Game Flow
+- Select avatar and name
+- Explore locations and perform actions to manage stats
+- Avoid letting any stat reach zero or going bankrupt
+- Game ends on failure, with options to restart or quit
+
+### 10. Time-Based Effects
+- Some actions advance the in-game time (e.g., sleep, rest, camp)
+- Greeting messages change based on the time of day
+
+### 11. Visuals & Feedback
+- Status bars for all stats (with color coding)
+- Animated money display when value changes
+- Tooltips for actions showing stat/money effects
+- Alerts for critical stat levels
